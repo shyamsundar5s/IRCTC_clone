@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IRCTC Official Portal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('Screenshot 2025-05-17 200151.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #003366;
+        }
+        
+        header {
+            background-color: white;
+            color: #003366;
+            display: flex;
+            align-items: center;
+            padding: 10px 30px;
+            justify-content: space-between;
+            border-bottom: 2px solid #003366;
+        }
+        
+        header img {
+            height: 60px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            font-weight: bold;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #003366;
+        }
+        
+        .main {
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 36px;
+            color: #003366;
+            margin-bottom: 40px;
+        }
+        
+        h1,
+        h2 {
+            border-bottom: 2px solid #003366;
+            padding-bottom: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #003366;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #003366;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            color: #003366;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+        
+        .section {
+            margin-top: 40px;
+        }
+        
+        #confirmation {
+            display: none;
+            font-size: 18px;
+            border: 2px solid #003366;
+            padding: 20px;
+            background-color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="IRCTC-logo.png" alt="IRCTC Logo">
+        <nav>
+            <a href="#trains">TRAINS</a>
+            <a href="#loyalty">LOYALTY</a>
+            <a href="#ewallet">IRCTC eWallet</a>
+            <a href="#buses">BUSES</a>
+            <a href="#flights">FLIGHTS</a>
+            <a href="#hotels">HOTELS</a>
+            <a href="#holidays">HOLIDAYS</a>
+            <a href="#meals">MEALS</a>
+            <a href="#promotions">PROMOTIONS</a>
+            <a href="#more">MORE</a>
+        </nav>
+    </header>
+
+    <div class="main">
+        <h1 class="page-title">IRCTC (Indian Railways)</h1>
+
+        <section class="ticket-booking">
+            <h1>Book Your Ticket</h1>
+            <form id="bookingForm">
+                <table>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" id="passengerName" required></td>
+                    </tr>
+                    <tr>
+                        <td>Age:</td>
+                        <td><input type="number" id="passengerAge" required></td>
+                    </tr>
+                    <tr>
+                        <td>From:</td>
+                        <td><input type="text" id="fromStation" required></td>
+                    </tr>
+                    <tr>
+                        <td>To:</td>
+                        <td><input type="text" id="toStation" required></td>
+                    </tr>
+                    <tr>
+                        <td>Date of Journey:</td>
+                        <td><input type="date" id="journeyDate" required></td>
+                    </tr>
+                    <tr>
+                        <td>Class:</td>
+                        <td>
+                            <select id="trainClass">
+                <option>All Classes</option>
+                <option>Sleeper</option>
+                <option>3A</option>
+                <option>2A</option>
+                <option>1A</option>
+              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Search Trains</button></td>
+                    </tr>
+                </table>
+            </form>
+        </section>
+
+        <section id="results" style="display:none;" class="section">
+            <h2>Available Trains</h2>
+            <table id="trainResults">
+                <thead>
+                    <tr>
+                        <th>Train Name</th>
+                        <th>Train Number</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="seatSelection" style="display:none;" class="section">
+            <h2>Select Your Seat</h2>
+            <form id="seatForm">
+                <label>
+          Seat Preference:
+          <select id="seatType">
+            <option>Upper</option>
+            <option>Middle</option>
+            <option>Lower</option>
+          </select>
+        </label><br><br>
+                <button type="submit">Confirm Booking</button>
+            </form>
+        </section>
+
+        <section id="confirmation" class="section">
+            <h2>Ticket Confirmation</h2>
+            <p><strong>PNR Number:</strong> <span id="pnr"></span></p>
+            <p><strong>Name:</strong> <span id="confName"></span></p>
+            <p><strong>Age:</strong> <span id="confAge"></span></p>
+            <p><strong>From:</strong> <span id="confFrom"></span></p>
+            <p><strong>To:</strong> <span id="confTo"></span></p>
+            <p><strong>Date of Journey:</strong> <span id="confDate"></span></p>
+            <p><strong>Class:</strong> <span id="confClass"></span></p>
+            <p><strong>Seat Preference:</strong> <span id="confSeat"></span></p>
+            <p><strong>Status:</strong> Confirmed</p>
+        </section>
+
+        <section class="history section">
+            <h2>History of Indian Railways</h2>
+            <p>The Indian Railways was founded in 1853 when the first train ran from Bombay to Thane. Over the years, it has grown into one of the world's largest railway networks.</p>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2025 IRCTC | Indian Railway Catering and Tourism Corporation
+    </footer>
+
+    <script>
+        const trains = [{
+            name: "Rajdhani Express",
+            number: "12951",
+            departure: "16:25",
+            arrival: "08:35",
+            status: "Available"
+        }, {
+            name: "Shatabdi Express",
+            number: "12001",
+            departure: "06:00",
+            arrival: "12:45",
+            status: "Waiting List"
+        }, {
+            name: "Duronto Express",
+            number: "12263",
+            departure: "23:00",
+            arrival: "09:40",
+            status: "Available"
+        }];
+
+        let bookingData = {};
+
+        document.getElementById("bookingForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            bookingData = {
+                name: document.getElementById("passengerName").value,
+                age: document.getElementById("passengerAge").value,
+                from: document.getElementById("fromStation").value,
+                to: document.getElementById("toStation").value,
+                date: document.getElementById("journeyDate").value,
+                classType: document.getElementById("trainClass").value
+            };
+
+            const tableBody = document.querySelector("#trainResults tbody");
+            tableBody.innerHTML = "";
+
+            trains.forEach(train => {
+                tableBody.innerHTML += `
+          <tr>
+            <td>${train.name}</td>
+            <td>${train.number}</td>
+            <td>${train.departure}</td>
+            <td>${train.arrival}</td>
+            <td>${bookingData.date}</td>
+            <td>${train.status}</td>
+          </tr>`;
+            });
+
+            document.getElementById("results").style.display = "block";
+            document.getElementById("seatSelection").style.display = "block";
+        });
+
+        document.getElementById("seatForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const seatType = document.getElementById("seatType").value;
+            document.getElementById("confName").textContent = bookingData.name;
+            document.getElementById("confAge").textContent = bookingData.age;
+            document.getElementById("confFrom").textContent = bookingData.from;
+            document.getElementById("confTo").textContent = bookingData.to;
+            document.getElementById("confDate").textContent = bookingData.date;
+            document.getElementById("confClass").textContent = bookingData.classType;
+            document.getElementById("confSeat").textContent = seatType;
+            document.getElementById("pnr").textContent = "IRCTC" + Math.floor(100000000 + Math.random() * 900000000);
+            document.getElementById("confirmation").style.display = "block";
+        });
+    </script>
+</body>
+
+</html>
